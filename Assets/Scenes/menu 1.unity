@@ -1281,19 +1281,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 808404658}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2106995104}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: RecordTable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &808404658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1508,7 +1496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4c7e1936d23334f83a81188b95aa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nuevosRecords: []
   namePlayer: 
   puntos: 0
   bestName: 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+
 
 public class MainManager : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    public Text nameP;
+    public Text bestPoint;
+    private int bestRecord;
+    private string bestRecordName;
     
     private bool m_Started = false;
     private int m_Points;
@@ -22,6 +28,12 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ScoreText.text = DontDestroyMenu.Instance.namePlayer + $" Tienes : {m_Points}" + " Puntos";
+        bestRecord = DontDestroyMenu.Instance.puntos;
+        bestPoint.text = bestRecord.ToString();
+        nameP.text = DontDestroyMenu.Instance.bestName;
+
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -40,6 +52,17 @@ public class MainManager : MonoBehaviour
 
     private void Update()
     {
+        if(m_Points > bestRecord)
+        {
+            ActualizarRecord();
+            DontDestroyMenu.Instance.SaveRecord();
+            
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.LoadScene(0);
+        }
         if (!m_Started)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -65,12 +88,36 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        ScoreText.text = DontDestroyMenu.Instance.namePlayer +  $" Tienes : {m_Points}" + " Puntos";
+        
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        GuardarPuntuacion();
     }
+
+    public void ActualizarRecord()
+    {
+        bestRecord = m_Points;
+        DontDestroyMenu.Instance.puntos = bestRecord;
+        bestRecordName = DontDestroyMenu.Instance.namePlayer;
+        DontDestroyMenu.Instance.bestName = bestRecordName;
+        bestPoint.text = bestRecord.ToString();
+        nameP.text = DontDestroyMenu.Instance.namePlayer;
+    }
+    public void GuardarPuntuacion()
+    {
+
+        DontDestroyMenu.Instance.nuevosRecords.Add(new records() { puntosRecords = m_Points, nameRecords = DontDestroyMenu.Instance.namePlayer });
+        DontDestroyMenu.Instance.SaveLastRecord();
+        DontDestroyMenu.Instance.SaveRecord();
+        //DontDestroyMenu.Instance.SaveR();
+        
+        
+    }
+    
 }
